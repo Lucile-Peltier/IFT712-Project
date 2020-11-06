@@ -41,21 +41,30 @@ class GestionDonnees :
         return x_base, t_base
                 
     def split_donnees(x_data, t_data, methode) :
-        
+        x_array = np.array(x_data)
+        t_array  = np.array(t_data)
+        x_train = []
+        t_train = []
+        x_test = []
+        t_test = []
         if methode==0 :
             kf = KFold(10, True)
-            #for idx_train, idx_test in
-            kf_splits = kf.split(x_data)
-            #x_train = x_data[idx_train]
-            #t_train = t_data[idx_train]
-            #x_test = x_data[idx_test]
-            #t_test = t_data[idx_test]
-            return kf_splits
-        
+            for idx_train, idx_test in kf.split(x_data) :
+                xtr = x_array[idx_train]
+                ttr = t_array[idx_train]
+                xte = x_array[idx_test]
+                tte = t_array[idx_test]
+                x_train.append(xtr)
+                t_train.append(ttr)
+                x_test.append(xte)
+                t_test.append(tte)
+      
         else :
-            return 0
+            x_train, x_test, t_train, t_test = train_test_split(x_data, t_data, \
+                                                                test_size = 0.25)
+        return x_train, t_train, x_test, t_test
             
 [xx, tt] = GestionDonnees.lecture_donnees(f_types, f_directories)
-kf_spl = GestionDonnees.split_donnees(xx,tt,0)
+xtr, ttr, xte, tte = GestionDonnees.split_donnees(xx,tt,0)
 
 print('Finished')
