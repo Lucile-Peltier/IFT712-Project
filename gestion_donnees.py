@@ -9,14 +9,17 @@ Created on Wed Oct  7 13:26:37 2020
 import numpy as np   # Algébra linéal
 import pandas as pd  # Analyse de données
 import os            # Se communiquer avec le système opérative  
+from sklearn.preprocessing import LabelEncoder # Gérer les noms des cibles
+
 # import matplotlib.pyplot as plt
-import cv2           # Gérer les images
+# import cv2           # Gérer les images
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 
-# Définir les marqueurs du classe et les dossiers avec les images
-f_types = os.listdir(os.getcwd() + '/flowers')
-f_directories = [os.getcwd() + '\\flowers\\' + it for it in f_types]
+# Lire les données test et train
+test_data = pd.read_csv(os.getcwd() + '/info/test.csv')
+train_data = pd.read_csv(os.getcwd() + '/info/train.csv')
+
 
 class GestionDonnees :
     def __init__(self, donnees_base, d_train, d_test) :
@@ -24,47 +27,73 @@ class GestionDonnees :
         self.d_test = d_test
         self.d_train = d_train
         
-    def lecture_donnees(types, directories) :
-        x_base = []
-        t_base = []
-        list_typ = list(range(len(f_types)))
-        for itr in list_typ :
-            f_type = f_types[itr]
-            path = f_directories[itr]
-            im_list = os.listdir(path)
-            for im_id in im_list :
-                path_com = path + "\\" + im_id
-                img = cv2.imread(path_com)
-                img_n = cv2.resize(img, (150, 150))
-                x_base.append(np.array(img_n))
-                t_base.append(str(f_type))
-        return x_base, t_base
-                
+    def lecture_donnees(test, train) :
+        """
+        Parameters
+        ----------
+        test :  Numpy array
+                Matrice lu du fichier base avec l'ensemble de données de test.
+        train : Numpy array
+                Matrice  lu du fichier base avec l'ensemble de données d'entraînement.
+
+        Returns
+        -------
+        f_types :   list
+                    List avec les noms de types de feuilles.
+        x_train :   DataFrame
+                    Contient uniquement les données d'entraînement.
+        id_tr :     Series (objet panda)
+                    Contient les id de l'ensemble d'entraînement.
+        t_train :   DataFrame
+                    Contient uniquement les cibles (chiffres) pour entraînement.
+        x_test :    DataFrame
+                    Contient uniquement les données de test.
+        id_te :     Series (objet panda)
+                    Contient les id de l'ensemble de test.
+
+        """
+        # Lire les types des feuilles du fichier train
+        encoder = LabelEncoder().fit(train.species)
+        f_types = list(encoder.classes_)
+        t_train = encoder.transform(train.species)
+        
+        # Séparer id du train et du test
+        id_tr = train.id
+        id_te = test.id
+        x_train = train.drop(['id', 'species'], axis= 1 )
+        x_test = test.drop(['id'], axis = 1)
+        
+        return f_types, x_train, id_tr, t_train, x_test, id_te
+                        
     def split_donnees(x_data, t_data, methode) :
+        # Separer les données pour entraînement et validation
+        
         x_array = np.array(x_data)
         t_array  = np.array(t_data)
-        x_train = []
-        t_train = []
-        x_test = []
-        t_test = []
+        x_entr = []
+        t_entr = []
+        x_valid = []
+        t_valid = []
         if methode==0 :
             kf = KFold(10, True)
-            for idx_train, idx_test in kf.split(x_data) :
-                xtr = x_array[idx_train]
-                ttr = t_array[idx_train]
-                xte = x_array[idx_test]
-                tte = t_array[idx_test]
-                x_train.append(xtr)
-                t_train.append(ttr)
-                x_test.append(xte)
-                t_test.append(tte)
+            for idx_entr, idx_test in kf.split(x_data) :
+                xen = x_array[idx_entr]
+                ten = t_array[idx_entr]
+                xva = x_array[idx_test]
+                tva = t_array[idx_test]
+                x_entr.append(xen)
+                t_entr.append(ten)
+                x_valid.append(xva)
+                t_valid.append(tva)
       
         else :
-            x_train, x_test, t_train, t_test = train_test_split(x_data, t_data, \
-                                                                test_size = 0.25)
-        return x_train, t_train, x_test, t_test
+            x_entr, x_valid, t_entr, t_valid = \
+                train_test_split(x_data, t_data, test_size = 0.25)
+                
+        return x_entr, t_entr, x_valid, t_valid
             
-[xx, tt] = GestionDonnees.lecture_donnees(f_types, f_directories)
-xtr, ttr, xte, tte = GestionDonnees.split_donnees(xx,tt,0)
+feuilles, xx, i_x, tt, xtst, i_t = GestionDonnees.lecture_donnees(test_data, \
+                                                                  train_data)
+xetr, tetr, xva, tva = GestionDonnees.split_donnees(xx,tt,0)
 
 print('Finished')
