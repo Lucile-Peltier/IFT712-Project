@@ -58,14 +58,16 @@ class GestionDonnees :
         t_train = encoder.transform(train.species)
         
         # Séparer id du train et du test
-        id_tr = train.id
-        id_te = test.id
+        #id_tr = train.id
+        #id_te = test.id
         x_train_df = train.drop(['id', 'species'], axis= 1 )
         x_train = x_train_df.to_numpy()
-        x_test = test.drop(['id'], axis = 1)
+        x_test_df = test.drop(['id'], axis = 1)
+        x_test = x_test_df.to_numpy()
         
-        return f_types, x_train, id_tr, t_train, x_test, id_te
-                        
+        return f_types, x_train, t_train, x_test
+    
+    """                    
     def split_donnees(x_data, t_data, spl_m) :
         # Separer les données pour entraînement et validation
         
@@ -93,9 +95,8 @@ class GestionDonnees :
                 
         print('Finished')        
         return x_entr, t_entr, x_valid, t_valid
+    """
             
-#feuilles, xx, i_x, tt, xtst, i_t = GestionDonnees.lecture_donnees(test_data, \
-#                                                                  train_data)
-#xetr, tetr, xva, tva = GestionDonnees.split_donnees(xx,tt,0)
+
 
 

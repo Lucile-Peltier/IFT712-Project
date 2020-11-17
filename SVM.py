@@ -55,9 +55,10 @@ class SupportVectorMachine:
         if cherche_hyp == True:
             parametres = self.recherche_hyper(x_train, t_train)
         else:
-            parametres = [{'kernel': self.noyau, 'C': self.lamb, 'gamma': 'auto'}]
+            parametres = {'kernel': self.noyau, 'C': self.lamb, 'gamma': 'auto'}
             
-        self.classif = svm.SVC(parametres) # Classificateur
+        #self.classif = svm.SVC(kernel='rbf', C= 0.2, gamma= 'auto') # Classificateur
+        self.classif = svm.SVC(**parametres)
         print('Finished training')
         
         return self.classif.fit(x_train, t_train)
