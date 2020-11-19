@@ -22,7 +22,7 @@ class SupportVectorMachine:
         self.noyau = 'rbf'
     
     def recherche_hyper(self, x_tr, t_tr):
-         """
+        """
         Recherche d'hyperparamètres pour SVM, ainsi que le meilleur noyau
         
         x_train: Numpy array avec données d'entraînement

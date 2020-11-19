@@ -11,7 +11,7 @@ import pandas as pd  # Analyse de données
 import os            # Se communiquer avec le système opérative  
 from sklearn.preprocessing import LabelEncoder # Gérer les noms des cibles
 # from sklearn.model_selection import train_test_split
-f# rom sklearn.model_selection import KFold
+# rom sklearn.model_selection import KFold
 
 # Lire les données test et train
 #test_data = pd.read_csv(os.getcwd() + '/info/test.csv')
