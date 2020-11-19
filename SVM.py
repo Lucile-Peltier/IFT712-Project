@@ -22,6 +22,16 @@ class SupportVectorMachine:
         self.noyau = 'rbf'
     
     def recherche_hyper(self, x_tr, t_tr):
+         """
+        Recherche d'hyperparamètres pour SVM, ainsi que le meilleur noyau
+        
+        x_train: Numpy array avec données d'entraînement
+        t_train: Numpy array avec cibles pour l'entraînement
+
+        Méthode de Grid Search. Noyaus evalués: rbf, lineaire, polynomial et sigmoïd 
+        
+        Retourne une dictionaire avec le meilleur noyau et ses meilleurs hyperparamètres
+        """
         valeurs_lamb = np.linspace(0.000000001,2,5)
         p_grid = [{'kernel': ['rbf'], 'C': valeurs_lamb, 
                        'gamma': ['scale']},
@@ -46,20 +56,20 @@ class SupportVectorMachine:
         
         x_train: Numpy array avec données d'entraînement
         t_train: Numpy array avec cibles pour l'entraînement
-        cherche_hyp: Pour chercher ou non le meilleur noyau et ses hyperparamètres
+        cherche_hyp: Chercher ou non le meilleur type de noyau et ses hyperparamètres
         
         Retourne objet avec le modèle entraîné
         """
-        print('Started training')
 
         if cherche_hyp == True:
+            print('Debut de l\'entrainement avec recherche d\'hyperparamètres')
             parametres = self.recherche_hyper(x_train, t_train)
         else:
+            print('Debut de l\'entrainement sans recherche d\'hyperparamètres')
             parametres = {'kernel': self.noyau, 'C': self.lamb, 'gamma': 'auto'}
             
-        #self.classif = svm.SVC(kernel='rbf', C= 0.2, gamma= 'auto') # Classificateur
         self.classif = svm.SVC(**parametres)
-        print('Finished training')
+        print('Fin de l\'entrainement')
         
         return self.classif.fit(x_train, t_train)
     
@@ -84,15 +94,5 @@ class SupportVectorMachine:
         Retourne le score
         """
         return self.classif.score(x, t)
-    
-    def hyperparametres(self, x_en, t_en):
-        """
-        Recherche d'hyperparamètre lambda du modèle SVM
-        
-        x = Numpy array avec données de test
-        t = Numpy array avec les cibles de class
-        
-        Retourne le score
-        """
     
         

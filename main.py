@@ -23,19 +23,31 @@ ch_hyp = True
 
 #import SVM as alg
 
-if algorithme == 'SVM':
+if algorithme == 'Perceptron':
+    print('Ce méthode n\'est pas prêt encore')
+    
+elif algorithme == 'SVM':
     import SVM
     classif = SVM.SupportVectorMachine()
+    
+elif algorithme == 'Proches_voisins': 
+    print('Ce méthode n\'est pas prêt encore')
+    
+elif algorithme == 'Naive_Bayesienne': 
+    print('Ce méthode n\'est pas prêt encore')
 
+elif algorithme == 'Arbre_decisions': 
+    print('Ce méthode n\'est pas prêt encore')
+
+elif algorithme == 'Reseau_neurones': 
+    print('Ce méthode n\'est pas prêt encore')
 
 def main():
 
     g_donnees = gd.GestionDonnees(train_data, test_data)
     [types, x_tr, t_tr, x_ts] = g_donnees.lecture_donnees(train_data,test_data)
-    #x_entr, t_entr, x_val, t_val = gd.split_donnees(x_tr,t_tr,0)
         
     # Entraînement
-    #classif = alg.SupportVectorMachine()
     classif.entrainement(x_tr, t_tr, ch_hyp)
     
     # Prédictions pour les ensembles d'entraînement et de test
@@ -49,9 +61,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-#sc_train, sc_test = main()
-
-#print('Le score d\'entraînement est :', sc_train)
-#print('Le score de validation est :', sc_test)
 
     

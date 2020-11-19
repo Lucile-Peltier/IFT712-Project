@@ -10,11 +10,8 @@ import numpy as np   # Algébra linéal
 import pandas as pd  # Analyse de données
 import os            # Se communiquer avec le système opérative  
 from sklearn.preprocessing import LabelEncoder # Gérer les noms des cibles
-
-# import matplotlib.pyplot as plt
-# import cv2           # Gérer les images
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold
+# from sklearn.model_selection import train_test_split
+f# rom sklearn.model_selection import KFold
 
 # Lire les données test et train
 #test_data = pd.read_csv(os.getcwd() + '/info/test.csv')
@@ -29,7 +26,7 @@ class GestionDonnees :
         
     def lecture_donnees(self, train, test) :
         """
-        Parameters
+        Paramètres
         ----------
         test :  Numpy array
                 Matrice lu du fichier base avec l'ensemble de données de test.
@@ -40,16 +37,12 @@ class GestionDonnees :
         -------
         f_types :   list
                     List avec les noms de types de feuilles.
-        x_train :   DataFrame
+        x_train :   Numpy array
                     Contient uniquement les données d'entraînement.
-        id_tr :     Series (objet panda)
-                    Contient les id de l'ensemble d'entraînement.
-        t_train :   DataFrame
+        t_train :   Numpy array
                     Contient uniquement les cibles (chiffres) pour entraînement.
-        x_test :    DataFrame
+        x_test :    Numpy array
                     Contient uniquement les données de test.
-        id_te :     Series (objet panda)
-                    Contient les id de l'ensemble de test.
 
         """
         # Lire les types des feuilles du fichier train
