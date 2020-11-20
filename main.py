@@ -11,6 +11,10 @@ import pandas as pd
 import os
 import gestion_donnees as gd
 from warnings import simplefilter
+
+import SVM
+import arbre_decision
+
 # ignore all future warnings
 simplefilter(action='ignore', category=FutureWarning)
 
@@ -18,16 +22,14 @@ simplefilter(action='ignore', category=FutureWarning)
 test_data = pd.read_csv(os.getcwd() + '/info/test.csv')
 train_data = pd.read_csv(os.getcwd() + '/info/train.csv')
 
-algorithme = 'SVM'
+algorithme = 'Arbre_decision'
 ch_hyp = True
 
-#import SVM as alg
 
 if algorithme == 'Perceptron':
     print('Ce méthode n\'est pas prêt encore')
     
 elif algorithme == 'SVM':
-    import SVM
     classif = SVM.SupportVectorMachine()
     
 elif algorithme == 'Proches_voisins': 
@@ -36,8 +38,8 @@ elif algorithme == 'Proches_voisins':
 elif algorithme == 'Naive_Bayesienne': 
     print('Ce méthode n\'est pas prêt encore')
 
-elif algorithme == 'Arbre_decisions': 
-    print('Ce méthode n\'est pas prêt encore')
+elif algorithme == 'Arbre_decision': 
+    classif = arbre_decision.ArbreDecision()
 
 elif algorithme == 'Reseau_neurones': 
     print('Ce méthode n\'est pas prêt encore')
@@ -53,6 +55,7 @@ def main():
     # Prédictions pour les ensembles d'entraînement et de test
     predict_tr = classif.prediction(x_tr)
     sc_tr = classif.precision(x_tr, t_tr)
+    print('Le score d\'entraînement est : ', sc_tr)
     
     predict_ts = classif.prediction(x_ts)
     sc_ts = classif.precision(x_ts, predict_ts)
