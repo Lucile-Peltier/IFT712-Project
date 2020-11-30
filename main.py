@@ -6,19 +6,25 @@ Created on Wed Oct  7 13:27:11 2020
          sergio.redondo
 """
 
+# Importer outils générales
 import numpy as np
 import pandas as pd
 import os
+
+# Importer codes spécifiques
 import gestion_donnees as gd
-from warnings import simplefilter
+import SVM
+import arbre_decision
+
 # ignore all future warnings
+from warnings import simplefilter
 simplefilter(action='ignore', category=FutureWarning)
 
 # Lire la base de données
 d_base = pd.read_csv(os.getcwd() + '/info/train.csv')
 
 algorithme = 'SVM'
-ch_hyp = False
+ch_hyp = True
 
 #Importer l'algorithme correspondant
 
@@ -26,7 +32,6 @@ if algorithme == 'Perceptron':
     print('Ce méthode n\'est pas prêt encore')
     
 elif algorithme == 'SVM':
-    import SVM
     classif = SVM.SupportVectorMachine()
     
 elif algorithme == 'Proches_voisins': 
@@ -36,8 +41,8 @@ elif algorithme == 'Naive_Bayesienne':
     print('Ce méthode n\'est pas prêt encore')
 
 elif algorithme == 'Arbre_decisions': 
-    print('Ce méthode n\'est pas prêt encore')
-
+    classif = arbre_decision.ArbreDecision()
+    
 elif algorithme == 'Reseau_neurones': 
     print('Ce méthode n\'est pas prêt encore')
 

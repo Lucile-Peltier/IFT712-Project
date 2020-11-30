@@ -18,7 +18,7 @@ class SupportVectorMachine:
         Algorithme de machines à vecteurs de support
         
         """
-        self.lamb = 0.2
+        self.lamb = 2
         self.noyau = 'rbf'
     
     def recherche_hyper(self, x_tr, t_tr):
@@ -28,17 +28,15 @@ class SupportVectorMachine:
         x_train: Numpy array avec données d'entraînement
         t_train: Numpy array avec cibles pour l'entraînement
 
-        Méthode de Grid Search. Noyaus evalués: rbf, lineaire, polynomial et sigmoïd 
+        Méthode de Grid Search. Noyaus evalués: rbf, polynomial et sigmoïd 
         
         Retourne une dictionaire avec le meilleur noyau et ses meilleurs hyperparamètres
         """
         valeurs_lamb = np.linspace(0.000000001,2,5)
-        p_grid = [{'kernel': ['rbf'], 'C': valeurs_lamb, 
-                       'gamma': ['scale']},
-                      {'kernel': ['linear'], 'C': valeurs_lamb}, \
-                      {'kernel': ['poly'], 'C': valeurs_lamb, 
-                       'degree': np.arange(2,7), 'coef0': np.arange(0,6)},
-                       {'kernel': ['sigmoid'], 'C': valeurs_lamb, 
+        p_grid = [{'kernel': ['rbf'], 'C': valeurs_lamb, 'gamma': ['scale']}, \
+                      {'kernel': ['poly'], 'C': valeurs_lamb,\
+                       'degree': np.arange(2,7), 'coef0': np.arange(0,6)}, \
+                       {'kernel': ['sigmoid'], 'C': valeurs_lamb, \
                        'gamma': ['scale']}]
         
         cross_v = KFold(10, True) # Cross-Validation
@@ -66,7 +64,7 @@ class SupportVectorMachine:
             parametres = self.recherche_hyper(x_train, t_train)
         else:
             print('Debut de l\'entrainement sans recherche d\'hyperparamètres')
-            parametres = {'kernel': self.noyau, 'C': self.lamb, 'gamma': 'auto'}
+            parametres = {'kernel': self.noyau, 'C': self.lamb, 'gamma': 'scale'}
             
         self.classif = svm.SVC(**parametres)
         print('Fin de l\'entrainement')

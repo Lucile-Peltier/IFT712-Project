@@ -18,9 +18,9 @@ class ArbreDecision:
         Algorithme d'arbre de décision
         
         """
-        self.prof_max = 40 # Profondeur maximale du l'arbre
+        self.prof_max = 30 # Profondeur maximale du l'arbre
         self.msf = 3  # Nombre minimal de samples dans une feuille
-        self.mfn = 100 # Nombre maximal de nodes de feuilles
+        self.mfn = 110 # Nombre maximal de nodes de feuilles
     
     def recherche_hyper(self, x_tr, t_tr):
         """
@@ -68,7 +68,7 @@ class ArbreDecision:
             parametres = self.recherche_hyper(x_train, t_train)
         else:
             print('Debut de l\'entrainement sans recherche d\'hyperparamètres')
-            parametres = {'criterion': 'gini', 'max_depth': self.prof_max, \
+            parametres = {'criterion': 'entropy', 'max_depth': self.prof_max, \
                    'min_samples_leaf': self.msf, 'max_leaf_nodes': self.mfn}
             
         self.classif = tree.DecisionTreeClassifier(**parametres)
@@ -91,7 +91,7 @@ class ArbreDecision:
     
     def precision(self, x, t):
         """
-        Précision ou score du modèle SVM
+        Précision ou score du modèle Arbre de décision
         
         x = Numpy array avec données de test
         t = Numpy array avec les cibles de class
