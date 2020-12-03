@@ -76,7 +76,6 @@ class ForetAleatoire:
                    'min_samples_leaf': self.msf, 'max_leaf_nodes': self.mfn}
             
         self.classif = RandomForestClassifier(**parametres)
-        print('Fin de l\'entrainement')
         
         #arbre_fin = self.classif.fit(x_train, t_train)
         #tree.plot_tree(arbre_fin)
