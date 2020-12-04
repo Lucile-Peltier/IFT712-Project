@@ -8,8 +8,8 @@ Created on Wed Oct  7 13:29:27 2020
 
 import numpy as np
 from sklearn import svm
-from sklearn.model_selection import GridSearchCV, KFold
-# import matplotlib.pyplot as plt
+from sklearn.model_selection import RandomizedSearchCV, KFold
+
 
 
 class SupportVectorMachine:
@@ -28,21 +28,21 @@ class SupportVectorMachine:
         x_train: Numpy array avec données d'entraînement
         t_train: Numpy array avec cibles pour l'entraînement
 
-        Méthode de Grid Search. Noyaus evalués: rbf, polynomial et sigmoïd 
+        Méthode de Randomized Search. Noyaus evalués: rbf, polynomial et sigmoïd 
         
         Retourne une dictionaire avec le meilleur noyau et ses meilleurs hyperparamètres
         """
-        valeurs_lamb = np.linspace(0.000000001,2,5)
-        p_grid = [{'kernel': ['rbf'], 'C': valeurs_lamb, 'gamma': ['scale']}, \
+        valeurs_lamb = np.linspace(0.000000001,2,30)
+        p_grid = {'kernel': ['rbf'], 'C': valeurs_lamb, 'gamma': ['scale']}, \
                       {'kernel': ['poly'], 'C': valeurs_lamb,\
                        'degree': np.arange(2,7), 'coef0': np.arange(0,6)}, \
                        {'kernel': ['sigmoid'], 'C': valeurs_lamb, \
-                       'gamma': ['scale']}]
+                       'gamma': ['scale']}
         
         cross_v = KFold(10, True) # Cross-Validation
             
         # Recherche d'hyperparamètres
-        self.classif = GridSearchCV(estimator=svm.SVC(), param_grid=p_grid, cv=cross_v)
+        self.classif = RandomizedSearchCV(estimator=svm.SVC(), param_distributions=p_grid, n_iter=25, cv=cross_v)
         self.classif.fit(x_tr, t_tr)
         mei_param = self.classif.best_params_
         
@@ -60,14 +60,13 @@ class SupportVectorMachine:
         """
 
         if cherche_hyp == True:
-            print('Debut de l\'entrainement avec recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement SVM avec recherche d\'hyperparamètres')
             parametres = self.recherche_hyper(x_train, t_train)
         else:
-            print('Debut de l\'entrainement sans recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement SVM sans recherche d\'hyperparamètres')
             parametres = {'kernel': self.noyau, 'C': self.lamb, 'gamma': 'scale'}
             
         self.classif = svm.SVC(**parametres)
-        print('Fin de l\'entrainement')
         
         return self.classif.fit(x_train, t_train)
     
@@ -82,15 +81,6 @@ class SupportVectorMachine:
         self.t_p = self.classif.predict(x_p)
         return self.t_p
     
-    def precision(self, x, t):
-        """
-        Précision ou score du modèle SVM
-        
-        x = Numpy array avec données de test
-        t = Numpy array avec les cibles de class
-        
-        Retourne le score
-        """
-        return self.classif.score(x, t)
+
     
         

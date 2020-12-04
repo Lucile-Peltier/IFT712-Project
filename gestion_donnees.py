@@ -50,7 +50,8 @@ class GestionDonnees :
     def sep_donnees(self, x_data,t_data) :
         
         # Separer les données pour entraînement et test
-        x_tr, x_te, t_tr, t_te = train_test_split(x_data, t_data, test_size = 0.2)
+        x_tr, x_te, t_tr, t_te = train_test_split(x_data, t_data, test_size = 0.25, \
+                                                  random_state = 7)
                 
         return x_tr, x_te, t_tr, t_te
             

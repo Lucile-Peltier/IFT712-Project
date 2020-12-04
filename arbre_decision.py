@@ -9,7 +9,7 @@ Created on Wed Oct  7 13:30:09 2020
 import numpy as np
 from sklearn import tree
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, KFold
-# import matplotlib.pyplot as plt
+
 
 
 class ArbreDecision:
@@ -65,10 +65,10 @@ class ArbreDecision:
         
         
         if cherche_hyp == True:
-            print('Debut de l\'entrainement avec recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement AD avec recherche d\'hyperparamètres')
             parametres = self.recherche_hyper(x_train, t_train)
         else:
-            print('Debut de l\'entrainement sans recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement AD sans recherche d\'hyperparamètres')
             parametres = {'criterion': 'entropy', 'max_depth': self.prof_max, \
                    'min_samples_leaf': self.msf, 'max_leaf_nodes': self.mfn}
             
@@ -89,16 +89,5 @@ class ArbreDecision:
         """
         self.t_p = self.classif.predict(x_p)
         return self.t_p
-    
-    def precision(self, x, t):
-        """
-        Précision ou score du modèle Arbre de décision
-        
-        x = Numpy array avec données de test
-        t = Numpy array avec les cibles de class
-        
-        Retourne le score
-        """
-        return self.classif.score(x, t)
     
     

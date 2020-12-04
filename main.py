@@ -11,15 +11,17 @@ import numpy as np
 import pandas as pd
 import os
 import time
-
+import sklearn.metrics
 
 # Importer codes spécifiques
 import gestion_donnees as gd
 import SVM
 import arbre_decision
 import foret_aleatoire
+import naive_bayesienne
 
-# ignore all future warnings
+
+# Ignorer les warnings
 from warnings import simplefilter
 simplefilter(action='ignore')
 
@@ -27,7 +29,7 @@ simplefilter(action='ignore')
 d_base = pd.read_csv(os.getcwd() + '/info/train.csv')
 
 algorithme = 'Foret_Aleatoire'
-ch_hyp = True
+ch_hyp = False
 
 #Importer l'algorithme correspondant
 
@@ -41,8 +43,8 @@ elif algorithme == 'Proches_voisins':
     print('Ce méthode n\'est pas prêt encore')
     
 elif algorithme == 'Naive_Bayesienne': 
-    print('Ce méthode n\'est pas prêt encore')
-
+    classif = naive_bayesienne.NaiveBayes()
+    
 elif algorithme == 'Arbre_decisions': 
     classif = arbre_decision.ArbreDecision()
     
@@ -68,12 +70,15 @@ def main():
     
     # Prédictions pour les ensembles d'entraînement et de test
     predict_tr = classif.prediction(x_tr)
-    sc_tr = classif.precision(x_tr, t_tr)
-    
     predict_ts = classif.prediction(x_ts)
-    sc_ts = classif.precision(x_ts, t_ts)
     
+    # Métriques pour évaluer l'entraînement et test
+    sc_tr = sklearn.metrics.accuracy_score(t_tr, predict_tr)
+    sc_ts = sklearn.metrics.accuracy_score(t_ts, predict_ts)
     print(sc_tr, sc_ts)
+
+    #print(sklearn.metrics.classification_report(t_ts, predict_ts))
+    
     
     return sc_tr, sc_ts
 

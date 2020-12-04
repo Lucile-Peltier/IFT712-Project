@@ -8,8 +8,8 @@ Created on Wed Oct  7 13:30:21 2020
 
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, KFold
-# import matplotlib.pyplot as plt
+from sklearn.model_selection import RandomizedSearchCV, KFold
+
 
 
 class ForetAleatoire:
@@ -30,17 +30,17 @@ class ForetAleatoire:
         x_train: Numpy array avec données d'entraînement
         t_train: Numpy array avec cibles pour l'entraînement
 
-        Méthode de Grid Search: 
+        Méthode de Randomized Search: 
             n_arbres: Nombre d'arbres entre 50 et 200
-            prof_max: Profondeur maximale entre 5 et 50
+            prof_max: Profondeur maximale entre 10 et 30
             msf: Nombre minimal de samples dans une feuille entre 2 et 10
             Mesure de la qualité de la séparation: giny et entropy
         
         Retourne une dictionaire avec les meilleurs hyperparamètres
         """
-        valeurs_narb = np.linspace(50,200,dtype=int)
-        valeurs_prof = np.linspace(10,20)
-        valeurs_msf = np.linspace(2,4, dtype=int)
+        valeurs_narb = np.arange(50,200, dtype=int)
+        valeurs_prof = np.arange(10,30, dtype=int)
+        valeurs_msf = np.arange(2,4, dtype=int)
         p_grid = {'n_estimators': valeurs_narb, 'criterion': ['gini','entropy'], \
                    'max_depth': valeurs_prof, 'min_samples_leaf': valeurs_msf, \
                    'max_leaf_nodes': [self.mfn]}
@@ -48,9 +48,8 @@ class ForetAleatoire:
         cross_v = KFold(10, True) # Cross-Validation
             
         # Recherche d'hyperparamètres
-        #self.classif = GridSearchCV(estimator=RandomForestClassifier(), param_grid=p_grid, cv=cross_v)
         self.classif = RandomizedSearchCV(estimator=RandomForestClassifier(), \
-                                          param_distributions=p_grid, n_iter=20, cv=cross_v)
+                                          param_distributions=p_grid, n_iter=25, cv=cross_v)
         self.classif.fit(x_tr, t_tr)
         mei_param = self.classif.best_params_
         
@@ -68,10 +67,10 @@ class ForetAleatoire:
         """
 
         if cherche_hyp == True:
-            print('Debut de l\'entrainement avec recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement FA avec recherche d\'hyperparamètres')
             parametres = self.recherche_hyper(x_train, t_train)
         else:
-            print('Debut de l\'entrainement sans recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement FA sans recherche d\'hyperparamètres')
             parametres = {'criterion': 'entropy', 'max_depth': self.prof_max, \
                    'min_samples_leaf': self.msf, 'max_leaf_nodes': self.mfn}
             
@@ -91,16 +90,5 @@ class ForetAleatoire:
         """
         self.t_p = self.classif.predict(x_p)
         return self.t_p
-    
-    def precision(self, x, t):
-        """
-        Précision ou score du modèle Forêt Aléatoire
-        
-        x = Numpy array avec données de test
-        t = Numpy array avec les cibles de class
-        
-        Retourne le score
-        """
-        return self.classif.score(x, t)
     
     
