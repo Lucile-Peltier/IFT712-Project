@@ -34,14 +34,14 @@ class ArbreDecision:
             msf: Nombre minimal de samples dans une feuille entre 2 et 10
             Mesure de la qualité de la séparation: giny et entropy
         
-        Retourne une dictionaire avec les meilleurs hyperparamètres
+        Retourne un dictionnaire avec les meilleurs hyperparamètres
         """
         valeurs_prof = np.arange(10,50)
         valeurs_msf = np.arange(2,10, dtype='int')
         p_grid = {'criterion': ['gini','entropy'], 'max_depth': valeurs_prof, \
                    'min_samples_leaf': valeurs_msf, 'max_leaf_nodes': [self.mfn]}
         
-        cross_v = KFold(10, True) # Cross-Validation
+        cross_v = KFold(10, True) # validation croisée
             
         # Recherche d'hyperparamètres
         self.classif = RandomizedSearchCV(estimator=tree.DecisionTreeClassifier(),\
@@ -60,7 +60,7 @@ class ArbreDecision:
         t_train: Numpy array avec cibles pour l'entraînement
         cherche_hyp: Chercher ou non le meilleures hyperparamètres
         
-        Retourne objet avec le modèle entraîné
+        Retourne un objet avec le modèle entraîné
         """
         
         

@@ -28,7 +28,7 @@ class SupportVectorMachine:
         x_train: Numpy array avec données d'entraînement
         t_train: Numpy array avec cibles pour l'entraînement
 
-        Méthode de Randomized Search. Noyaus evalués: rbf, polynomial et sigmoïd 
+        Méthode de Randomized Search. Noyaus evalués: rbf, polynomial et sigmoïde 
         
         Retourne une dictionaire avec le meilleur noyau et ses meilleurs hyperparamètres
         """
@@ -39,7 +39,7 @@ class SupportVectorMachine:
                        {'kernel': ['sigmoid'], 'C': valeurs_lamb, \
                        'gamma': ['scale']}
         
-        cross_v = KFold(10, True) # Cross-Validation
+        cross_v = KFold(10, True) # Validation croisée
             
         # Recherche d'hyperparamètres
         self.classif = RandomizedSearchCV(estimator=svm.SVC(), param_distributions=p_grid, n_iter=25, cv=cross_v)
@@ -56,7 +56,7 @@ class SupportVectorMachine:
         t_train: Numpy array avec cibles pour l'entraînement
         cherche_hyp: Chercher ou non le meilleur type de noyau et ses hyperparamètres
         
-        Retourne objet avec le modèle entraîné
+        Retourne un objet avec le modèle entraîné
         """
 
         if cherche_hyp == True:

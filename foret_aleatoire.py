@@ -18,14 +18,14 @@ class ForetAleatoire:
         Algorithme de Forêt Aléatoire
         
         """
-        self.n_arbres = 100 # Nombre d árbres à utiliser
+        self.n_arbres = 100 # Nombre d arbres à utiliser
         self.prof_max = 30 # Profondeur maximale du l'arbre
         self.msf = 3  # Nombre minimal de samples dans une feuille
         self.mfn = 110 # Nombre maximal de nodes de feuilles
     
     def recherche_hyper(self, x_tr, t_tr):
         """
-        Recherche d'hyperparamètres pour le Forêt Aléatoire
+        Recherche d'hyperparamètres pour la Forêt Aléatoire
         
         x_train: Numpy array avec données d'entraînement
         t_train: Numpy array avec cibles pour l'entraînement
@@ -33,10 +33,10 @@ class ForetAleatoire:
         Méthode de Randomized Search: 
             n_arbres: Nombre d'arbres entre 50 et 200
             prof_max: Profondeur maximale entre 10 et 30
-            msf: Nombre minimal de samples dans une feuille entre 2 et 10
+            msf: Nombre minimal d'échantillons dans une feuille entre 2 et 10
             Mesure de la qualité de la séparation: giny et entropy
         
-        Retourne une dictionaire avec les meilleurs hyperparamètres
+        Retourne un dictionnaire avec les meilleurs hyperparamètres
         """
         valeurs_narb = np.arange(50,200, dtype=int)
         valeurs_prof = np.arange(10,30, dtype=int)
@@ -45,7 +45,7 @@ class ForetAleatoire:
                    'max_depth': valeurs_prof, 'min_samples_leaf': valeurs_msf, \
                    'max_leaf_nodes': [self.mfn]}
         
-        cross_v = KFold(10, True) # Cross-Validation
+        cross_v = KFold(10, True) # validation croisée
             
         # Recherche d'hyperparamètres
         self.classif = RandomizedSearchCV(estimator=RandomForestClassifier(), \
@@ -61,9 +61,9 @@ class ForetAleatoire:
         
         x_train: Numpy array avec données d'entraînement
         t_train: Numpy array avec cibles pour l'entraînement
-        cherche_hyp: Chercher ou non le meilleures hyperparamètres
+        cherche_hyp: Chercher ou non les meilleures hyperparamètres
         
-        Retourne objet avec le modèle entraîné
+        Retourne un objet avec le modèle entraîné
         """
 
         if cherche_hyp == True:

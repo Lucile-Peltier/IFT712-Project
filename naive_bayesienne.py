@@ -30,15 +30,15 @@ class NaiveBayes:
 
         Méthode de Grid Search: 
             prof_max: Profondeur maximale entre 10 et 50
-            msf: Nombre minimal de samples dans une feuille entre 2 et 10
+            msf: Nombre minimal d'échantillons dans une feuille entre 2 et 10
             Mesure de la qualité de la séparation: giny et entropy
         
-        Retourne une dictionaire avec les meilleurs hyperparamètres
+        Retourne un dictionnaire avec les meilleurs hyperparamètres
         """
         valeurs_liss = np.arange(1.0,2.0,0.1)
         p_grid = [{'alpha': valeurs_liss}]
         
-        cross_v = KFold(10, True) # Cross-Validation
+        cross_v = KFold(10, True) # validation croisée
             
         # Recherche d'hyperparamètres
         self.classif = GridSearchCV(estimator=BernoulliNB(),\
@@ -55,9 +55,9 @@ class NaiveBayes:
         
         x_train: Numpy array avec données d'entraînement
         t_train: Numpy array avec cibles pour l'entraînement
-        cherche_hyp: Chercher ou non le meilleures hyperparamètres
+        cherche_hyp: Chercher ou non les meilleures hyperparamètres
         
-        Retourne objet avec le modèle entraîné
+        Retourne un objet avec le modèle entraîné
         """
         
         

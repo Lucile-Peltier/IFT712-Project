@@ -24,16 +24,16 @@ class GestionDonnees :
         Paramètres
         ----------
         base_d :  Numpy array
-                  Matrice  lu du fichier base avec l'ensemble de données d'entraînement.
+                  Matrice lu du fichier base avec l'ensemble de données d'entraînement.
 
         Returns
         -------
-        f_types :   list
-                    List avec les noms de types de feuilles.
+        f_types :  list
+                    Liste avec les noms des types de feuilles.
         x_base :   Numpy array
                     Contient uniquement les données d'entraînement.
         t_base :   Numpy array
-                    Contient uniquement les cibles (chiffres) pour entraînement.
+                    Contient uniquement les cibles (chiffres) pour l'entraînement.
 
         """
         # Lire les types des feuilles du fichier train

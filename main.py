@@ -41,7 +41,7 @@ if algorithme == 'Perceptron':
 elif algorithme == 'SVM':
     classif = SVM.SupportVectorMachine()
     
-elif algorithme == 'Proches_voisins': 
+elif algorithme == 'K_Proches_voisins': 
     print('Ce méthode n\'est pas prêt encore')
     
 elif algorithme == 'Naive_Bayesienne': 

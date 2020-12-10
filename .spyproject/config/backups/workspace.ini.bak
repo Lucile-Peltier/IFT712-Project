@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = ['gestion_donnees.py', 'main.py', 'perceptron.py', 'naive_bayesienne.py', 'arbre_decision.py', 'foret_aleatoire.py', 'reseau_neurones.py']
+recent_files = ['..\\Bureau\\M2 Sherbrooke\\IFT 712\\TPS\\TP3\\devoir3\\map_noyau.py']
 
