@@ -32,12 +32,13 @@ class SupportVectorMachine:
         
         Retourne une dictionaire avec le meilleur noyau et ses meilleurs hyperparamètres
         """
-        valeurs_lamb = np.linspace(0.000000001,2,30)
-        p_grid = {'kernel': ['rbf'], 'C': valeurs_lamb, 'gamma': ['scale']}, \
+        valeurs_lamb = np.linspace(0.00001,2,30)
+        valeurs_b_sg = np.arange(1.,20.)
+        p_grid = {'kernel': ['rbf'], 'C': valeurs_lamb, 'gamma': ['scale','auto']}, \
                       {'kernel': ['poly'], 'C': valeurs_lamb,\
-                       'degree': np.arange(2,7), 'coef0': np.arange(0,6)}, \
+                       'degree': np.arange(2,7), 'coef0': np.arange(0,10)}, \
                        {'kernel': ['sigmoid'], 'C': valeurs_lamb, \
-                       'gamma': ['scale']}
+                       'coef0': np.arange(0,10), 'gamma': valeurs_b_sg}
         
         cross_v = KFold(10, True) # Cross-Validation
             

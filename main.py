@@ -30,8 +30,8 @@ simplefilter(action='ignore')
 # Lire la base de données
 d_base = pd.read_csv(os.getcwd() + '/info/train.csv')
 
-algorithme = 'Foret_Aleatoire'
-ch_hyp = False
+algorithme = 'SVM'
+ch_hyp = True
 
 #Importer l'algorithme correspondant
 
@@ -79,7 +79,8 @@ def main():
     acc_ts = accu(t_ts, predict_ts)
     tab_perform = [['Accuracy', acc_tr, acc_ts],['Précision', prs_tr, prs_ts],\
                    ['Rappel', rec_tr, rec_ts],['F-Beta', fbeta_tr, fbeta_ts]]
-    print(tabulate(tab_perform, headers=['Metrique', 'Train', 'Test'], floatfmt='.4f'))
+    print(tabulate(tab_perform, headers=['Metrique', 'Train', 'Test'], \
+                   floatfmt='.4f'))
    
     return tab_perform
 
