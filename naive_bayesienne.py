@@ -62,17 +62,17 @@ class NaiveBayes:
         
         
         if cherche_hyp == True:
-            print('Debut de l\'entrainement NB avec recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement NB avec recherche d\'hyperparamètres','\n')
             parametres = self.recherche_hyper(x_train, t_train)
         else:
-            print('Debut de l\'entrainement NB sans recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement NB sans recherche d\'hyperparamètres','\n')
             parametres = {'alpha': self.lissage}
             
         self.classif = BernoulliNB(**parametres)
         
-        
-        #arbre_fin = self.classif.fit(x_train, t_train)
-        #tree.plot_tree(arbre_fin)
+        print('Paramètres utilisés pour l\'entraînement NB :',\
+              self.classif.get_params(),'\n')        
+
         return self.classif.fit(x_train, t_train)
     
     def prediction(self, x_p):

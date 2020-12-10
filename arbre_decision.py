@@ -36,8 +36,8 @@ class ArbreDecision:
         
         Retourne une dictionaire avec les meilleurs hyperparamètres
         """
-        valeurs_prof = np.linspace(10,50)#,5)
-        valeurs_msf = np.linspace(2,10, dtype='int')
+        valeurs_prof = np.arange(10,50)
+        valeurs_msf = np.arange(2,10, dtype='int')
         p_grid = {'criterion': ['gini','entropy'], 'max_depth': valeurs_prof, \
                    'min_samples_leaf': valeurs_msf, 'max_leaf_nodes': [self.mfn]}
         
@@ -65,16 +65,17 @@ class ArbreDecision:
         
         
         if cherche_hyp == True:
-            print('Debut de l\'entrainement AD avec recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement AD avec recherche d\'hyperparamètres','\n')
             parametres = self.recherche_hyper(x_train, t_train)
         else:
-            print('Debut de l\'entrainement AD sans recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement AD sans recherche d\'hyperparamètres','\n')
             parametres = {'criterion': 'entropy', 'max_depth': self.prof_max, \
                    'min_samples_leaf': self.msf, 'max_leaf_nodes': self.mfn}
             
         self.classif = tree.DecisionTreeClassifier(**parametres)
         
-        
+        print('Paramètres utilisés pour l\'entraînement AD :',\
+              self.classif.get_params(),'\n')
         #arbre_fin = self.classif.fit(x_train, t_train)
         #tree.plot_tree(arbre_fin)
         return self.classif.fit(x_train, t_train)

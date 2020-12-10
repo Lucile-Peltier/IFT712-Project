@@ -67,17 +67,18 @@ class ForetAleatoire:
         """
 
         if cherche_hyp == True:
-            print('Debut de l\'entrainement FA avec recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement FA avec recherche d\'hyperparamètres','\n')
             parametres = self.recherche_hyper(x_train, t_train)
         else:
-            print('Debut de l\'entrainement FA sans recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement FA sans recherche d\'hyperparamètres','\n')
             parametres = {'criterion': 'entropy', 'max_depth': self.prof_max, \
                    'min_samples_leaf': self.msf, 'max_leaf_nodes': self.mfn}
             
         self.classif = RandomForestClassifier(**parametres)
         
-        #arbre_fin = self.classif.fit(x_train, t_train)
-        #tree.plot_tree(arbre_fin)
+        print('Paramètres utilisés pour l\'entraînement FA :',\
+              self.classif.get_params(),'\n')
+
         return self.classif.fit(x_train, t_train)
     
     def prediction(self, x_p):

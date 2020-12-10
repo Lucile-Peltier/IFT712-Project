@@ -60,13 +60,16 @@ class SupportVectorMachine:
         """
 
         if cherche_hyp == True:
-            print('Debut de l\'entrainement SVM avec recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement SVM avec recherche d\'hyperparamètres','\n')
             parametres = self.recherche_hyper(x_train, t_train)
         else:
-            print('Debut de l\'entrainement SVM sans recherche d\'hyperparamètres')
+            print('Debut de l\'entrainement SVM sans recherche d\'hyperparamètres','\n')
             parametres = {'kernel': self.noyau, 'C': self.lamb, 'gamma': 'scale'}
             
         self.classif = svm.SVC(**parametres)
+        
+        print('Paramètres utilisés pour l\'entraînement SVM :',\
+              self.classif.get_params(),'\n')
         
         return self.classif.fit(x_train, t_train)
     
