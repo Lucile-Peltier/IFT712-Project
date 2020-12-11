@@ -6,8 +6,7 @@ Created on Wed Oct  7 13:27:11 2020
          sergio.redondo
 """
 
-# Importer outils générales
-import numpy as np
+# Importer outils générals
 import pandas as pd
 import os
 import time
@@ -15,13 +14,14 @@ from sklearn.metrics import precision_recall_fscore_support as metriques
 from sklearn.metrics import accuracy_score as accu
 from tabulate import tabulate
 
-# Importer codes spécifiques
+# Importer fichiers spécifiques
 import gestion_donnees as gd
 import SVM
 import arbre_decision
 import foret_aleatoire
 import naive_bayesienne
 import k_proches_voisins
+import perceptron
 
 
 # Ignorer les warnings
@@ -31,13 +31,13 @@ simplefilter(action='ignore')
 # Lire la base de données
 d_base = pd.read_csv(os.getcwd() + '/donnees/train.csv')
 
-algorithme = 'K_Proches_voisins'
+algorithme = 'Perceptron'
 ch_hyp = True
 
 #Importer l'algorithme correspondant
 
 if algorithme == 'Perceptron':
-    print('Ce méthode n\'est pas prêt encore')
+    classif = perceptron.Perceptron()
     
 elif algorithme == 'SVM':
     classif = SVM.SupportVectorMachine()
