@@ -21,6 +21,7 @@ import SVM
 import arbre_decision
 import foret_aleatoire
 import naive_bayesienne
+import k_proches_voisins
 
 
 # Ignorer les warnings
@@ -28,10 +29,10 @@ from warnings import simplefilter
 simplefilter(action='ignore')
 
 # Lire la base de données
-d_base = pd.read_csv(os.getcwd() + '/info/train.csv')
+d_base = pd.read_csv(os.getcwd() + '/donnees/train.csv')
 
-algorithme = 'Foret_Aleatoire'
-ch_hyp = False
+algorithme = 'K_Proches_voisins'
+ch_hyp = True
 
 #Importer l'algorithme correspondant
 
@@ -42,7 +43,7 @@ elif algorithme == 'SVM':
     classif = SVM.SupportVectorMachine()
     
 elif algorithme == 'K_Proches_voisins': 
-    print('Ce méthode n\'est pas prêt encore')
+    classif = k_proches_voisins.KProchesVoisins()
     
 elif algorithme == 'Naive_Bayesienne': 
     classif = naive_bayesienne.NaiveBayes()

@@ -19,7 +19,7 @@ class ArbreDecision:
         
         """
         self.prof_max = 30 # Profondeur maximale du l'arbre
-        self.msf = 3  # Nombre minimal de samples dans une feuille
+        self.msf = 3  # Nombre minimal d'échantillons dans une feuille
         self.mfn = 110 # Nombre maximal de nodes de feuilles
     
     def recherche_hyper(self, x_tr, t_tr):
