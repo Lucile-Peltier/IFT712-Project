@@ -35,7 +35,7 @@ class NaiveBayes:
         
         Retourne une dictionaire avec les meilleurs hyperparamètres
         """
-        valeurs_liss = np.arange(1.0,2.0,0.1)
+        valeurs_liss = np.arange(0.0,1.0,0.01)
         p_grid = [{'alpha': valeurs_liss}]
         
         cross_v = KFold(10, True) # Cross-Validation

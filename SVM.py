@@ -36,7 +36,7 @@ class SupportVectorMachine:
         valeurs_b_sg = np.arange(1.,20.)
         p_grid = {'kernel': ['rbf'], 'C': valeurs_lamb, 'gamma': ['scale','auto']}, \
                       {'kernel': ['poly'], 'C': valeurs_lamb,\
-                       'degree': np.arange(2,7), 'coef0': np.arange(0,10)}, \
+                       'degree': np.arange(2,7), 'coef0': np.arange(0.,10.,0.1)}, \
                        {'kernel': ['sigmoid'], 'C': valeurs_lamb, \
                        'coef0': np.arange(0,10), 'gamma': valeurs_b_sg}
         

@@ -13,6 +13,7 @@ import os
 import time
 from sklearn.metrics import precision_recall_fscore_support as metriques
 from sklearn.metrics import accuracy_score as accu
+from sklearn.metrics import plot_roc_curve
 from tabulate import tabulate
 
 # Importer codes spécifiques
@@ -30,7 +31,7 @@ simplefilter(action='ignore')
 # Lire la base de données
 d_base = pd.read_csv(os.getcwd() + '/info/train.csv')
 
-algorithme = 'SVM'
+algorithme = 'Foret_Aleatoire'
 ch_hyp = True
 
 #Importer l'algorithme correspondant
@@ -81,6 +82,8 @@ def main():
                    ['Rappel', rec_tr, rec_ts],['F-Beta', fbeta_tr, fbeta_ts]]
     print(tabulate(tab_perform, headers=['Metrique', 'Train', 'Test'], \
                    floatfmt='.4f'))
+    
+    #roc_courbe = plot_roc_curve(classif, x_ts, t_ts)
    
     return tab_perform
 
