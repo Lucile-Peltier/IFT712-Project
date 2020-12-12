@@ -73,11 +73,11 @@ class KProchesVoisins:
 
         """
         if cherche_hyp == True:
-            print('Debut de l\'entrainement AD avec recherche d\'hyperparamètres','\n')
+            print('Debut de l\'entrainement K voisins avec recherche d\'hyperparamètres','\n')
             parametres = self.recherche_hyper(x_train, t_train)
         
         else:
-            print('Debut de l\'entrainement AD sans recherche d\'hyperparamètres','\n')
+            print('Debut de l\'entrainement K voisins sans recherche d\'hyperparamètres','\n')
             parametres = {'n_neighbors': self.n_neighbors, 'weights': self.weights, \
                           'algorithm': self.algorithm, 'leaf_size' : self.leaf_size, 'p': self.p,\
                           'metric': self.metric, 'metric_params': self.metric_params, 'n_jobs': self.n_jobs}
