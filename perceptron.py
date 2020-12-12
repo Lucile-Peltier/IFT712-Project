@@ -17,7 +17,7 @@ class Perceptron:
         Algotithme du perceptron multi-classe
 
         """
-        self.hidden_layer_sizes = (100,) #taille des couhces cachées
+        self.hidden_layer_sizes = (100,) #taille et nombre de couches cachées
         self.activation = 'relu'         #fonction d'activation de la couche cachée
         self.solver = 'adam'             #optimization des poids
         self.alpha = 0.0001              #terme de régularisation
@@ -48,33 +48,26 @@ class Perceptron:
         x_tr: Numpy array avec données d'entraînement
         t_tr: Numpy array avec cibles pour l'entraînement
 
-        Méthode de Grid Search:
-            n_neighbors : nombre de voisins entre 3 et 15
-            p: paramètre de puissance de Minkowski entre 1 et 5
+        Méthode de RandomizedSearch
         
         Retourne un dictionnaire avec les meilleurs hyperparamètres
             
         """
-        couches_cachees = np.arange(50, 200)
-        valeurs_max_iter = np.arange(100, 500, 10)
-        valeurs_tol = np.arange(1e-6, 1e-1)
-        valeurs_mometum = np.arange(0, 1)
-        valeurs_beta = np.arange(0, 1, 0.01)
-        valeurs_epsilon = np.arange(1e-10, 1e-6)
-        valeurs_n_iter = np.arange(5, 20)
-        valeurs_max_fun = np.arange(10000, 30000)
+        valeurs_max_iter = np.arange(20, 200, 20)
+        valeurs_tol = np.arange(0, 2e-4, 0.2e-4)
+        valeurs_learning_rate = np.arange(0.5e-4, 2e-3, 0.5e-4)
+        valeurs_momentum = np.arange(0, 1, 0.2)
         
-        p_grid = {'hidden_layer_sizes': (couches_cachees,), 'activation': ['identity', 'logistic', 'tanh', 'relu'], \
-                  'solver': ['lbfgs', 'sgd', 'adam'], 'learning_rate': ['constant', 'invscaling', 'adaptative'], \
-                  'max_iter': valeurs_max_iter, 'tol': valeurs_tol, 'warm_start': [True, False], \
-                  'momentum': valeurs_mometum, 'beta_1': valeurs_beta, 'beta_2': valeurs_beta, \
-                  'epsilon': valeurs_epsilon, 'n_iter_no_change': valeurs_n_iter, 'max_fun': valeurs_max_fun}
+        p_grid = {'activation': ['logistic', 'tanh', 'relu'], 'solver': ['lbfgs', 'sgd', 'adam'], \
+                  'batch_size': [64], 'learning_rate': ['constant', 'invscaling', 'adaptative'],\
+                  'learning_rate_init': valeurs_learning_rate, 'max_iter': valeurs_max_iter, \
+                  'tol': valeurs_tol, 'momentum': valeurs_momentum}
         
         cross_v = KFold(10, True) #validation croisée
         
         ## Recherche hyperparamètres
         self.classif = RandomizedSearchCV(estimator=MLPClassifier(), \
-                                          param_distributions=p_grid, n_iter=20, cv=cross_v)
+                                         param_distributions=p_grid, n_iter=20, cv=cross_v)
         self.classif.fit(x_tr, t_tr)
         mei_param = self.classif.best_params_
         

@@ -32,7 +32,7 @@ simplefilter(action='ignore')
 d_base = pd.read_csv(os.getcwd() + '/donnees/train.csv')
 
 algorithme = 'Perceptron'
-ch_hyp = True
+cherche_hyp = True
 
 #Importer l'algorithme correspondant
 
@@ -65,7 +65,7 @@ def main():
         
     # Entraînement
     debut_e = time.time() # Heure de debut pour mesurer le temps d'entraînement
-    classif.entrainement(x_tr, t_tr, ch_hyp)
+    classif.entrainement(x_tr, t_tr, cherche_hyp)
     fin_e = time.time() # Heure de fin pour mesurer le temps d'entraînement
     print('Fin de l\'entrainement. Réalisé en %.2f secondes.'% (fin_e - debut_e),'\n')
     

@@ -8,7 +8,7 @@ Created on Thu Dec 10 19:44:30 2020
 
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, KFold
+from sklearn.model_selection import RandomizedSearchCV, KFold
 
 class KProchesVoisins:
     def __init__(self):
