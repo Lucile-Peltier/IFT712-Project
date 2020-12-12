@@ -9,6 +9,7 @@ Created on Thu Dec 10 19:44:30 2020
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import RandomizedSearchCV, KFold
+import matplotlib.pyplot as plt
 
 class KProchesVoisins:
     def __init__(self):
@@ -25,6 +26,20 @@ class KProchesVoisins:
         self.metric_params=None   # paramères additionnels
         self.n_jobs=None          # travaux parallèles
         
+    def affichage(self, x_tr, t_tr):
+       # Affichage
+       ix = np.arange(x_tr[:, 0].min(), x_tr[:, 0].max(), 0.1)
+       iy = np.arange(x_tr[:, 1].min(), x_tr[:, 1].max(), 0.1)
+       iX, iY = np.meshgrid(ix, iy)
+       x_vis = np.hstack([iX.reshape((-1, 1)), iY.reshape((-1, 1))])
+       contour_out = np.array([self.prediction(x) for x in x_vis])
+       contour_out = contour_out.reshape(iX.shape)
+
+       plt.contourf(iX, iY)
+       plt.scatter(x_tr[:, 0], x_tr[:, 1], s=(t_tr + 0.5) * 100, c=t_tr, edgecolors='y')
+       plt.show()
+       
+       
     def recherche_hyper(self, x_tr, t_tr):
         """
         Recherche d'hyperparamètres pour les K plus proches voisins'
@@ -79,8 +94,9 @@ class KProchesVoisins:
         else:
             print('Debut de l\'entrainement AD sans recherche d\'hyperparamètres','\n')
             parametres = {'n_neighbors': self.n_neighbors, 'weights': self.weights, \
-                          'algorithm': self.algorithm, 'leaf_size' : self.leaf_size, 'p': self.p,\
-                          'metric': self.metric, 'metric_params': self.metric_params, 'n_jobs': self.n_jobs}
+                          'algorithm': self.algorithm, 'leaf_size' : self.leaf_size,\
+                          'p': self.p, 'metric': self.metric, 'metric_params': self.metric_params,\
+                          'n_jobs': self.n_jobs}
             
         self.classif =KNeighborsClassifier(**parametres)
         
@@ -88,6 +104,7 @@ class KProchesVoisins:
               self.classif.get_params(),'\n')
             
         return self.classif.fit(x_train, t_train)
+        
     
     def prediction(self, x_p):
         """
@@ -99,3 +116,17 @@ class KProchesVoisins:
         """
         self.t_p = self.classif.predict(x_p)
         return self.t_p
+    
+    
+    def prediction_graphe(self, x_p):
+        """
+        Prédiction avec K proches voisins
+        
+        x_p = Numpy array avec données pour trouver la prédiction
+        
+        Retourne les cibles t_p pour x_p et leur score
+        """
+        self.t_p = self.classif.predict(x_p)
+        return self.t_p, self.t_p
+    
+    

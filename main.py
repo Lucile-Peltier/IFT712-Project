@@ -31,8 +31,8 @@ simplefilter(action='ignore')
 # Lire la base de données
 d_base = pd.read_csv(os.getcwd() + '/donnees/train.csv')
 
-algorithme = 'Perceptron'
-cherche_hyp = True
+algorithme = 'K_Proches_voisins'
+cherche_hyp = False
 
 #Importer l'algorithme correspondant
 
@@ -81,7 +81,9 @@ def main():
     tab_perform = [['Accuracy', acc_tr, acc_ts],['Précision', prs_tr, prs_ts],\
                    ['Rappel', rec_tr, rec_ts],['F-Beta', fbeta_tr, fbeta_ts]]
     print(tabulate(tab_perform, headers=['Metrique', 'Train', 'Test'], floatfmt='.4f'))
-   
+    
+    classif.affichage(x_tr, t_tr)
+    
     return tab_perform
 
 if __name__ == "__main__":
