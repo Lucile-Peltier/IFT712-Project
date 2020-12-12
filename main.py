@@ -6,22 +6,22 @@ Created on Wed Oct  7 13:27:11 2020
          sergio.redondo
 """
 
-# Importer outils générales
-import numpy as np
+# Importer outils générals
 import pandas as pd
 import os
 import time
 from sklearn.metrics import precision_recall_fscore_support as metriques
 from sklearn.metrics import accuracy_score as accu
-from sklearn.metrics import plot_roc_curve
 from tabulate import tabulate
 
-# Importer codes spécifiques
+# Importer fichiers spécifiques
 import gestion_donnees as gd
 import SVM
 import arbre_decision
 import foret_aleatoire
 import naive_bayesienne
+import k_proches_voisins
+import perceptron
 
 
 # Ignorer les warnings
@@ -29,21 +29,21 @@ from warnings import simplefilter
 simplefilter(action='ignore')
 
 # Lire la base de données
-d_base = pd.read_csv(os.getcwd() + '/info/train.csv')
+d_base = pd.read_csv(os.getcwd() + '/donnees/train.csv')
 
-algorithme = 'Foret_Aleatoire'
-ch_hyp = True
+algorithme = 'Perceptron'
+cherche_hyp = True
 
 #Importer l'algorithme correspondant
 
 if algorithme == 'Perceptron':
-    print('Ce méthode n\'est pas prêt encore')
+    classif = perceptron.Perceptron()
     
 elif algorithme == 'SVM':
     classif = SVM.SupportVectorMachine()
     
 elif algorithme == 'K_Proches_voisins': 
-    print('Ce méthode n\'est pas prêt encore')
+    classif = k_proches_voisins.KProchesVoisins()
     
 elif algorithme == 'Naive_Bayesienne': 
     classif = naive_bayesienne.NaiveBayes()
@@ -65,7 +65,7 @@ def main():
         
     # Entraînement
     debut_e = time.time() # Heure de debut pour mesurer le temps d'entraînement
-    classif.entrainement(x_tr, t_tr, ch_hyp)
+    classif.entrainement(x_tr, t_tr, cherche_hyp)
     fin_e = time.time() # Heure de fin pour mesurer le temps d'entraînement
     print('Fin de l\'entrainement. Réalisé en %.2f secondes.'% (fin_e - debut_e),'\n')
     
@@ -80,10 +80,7 @@ def main():
     acc_ts = accu(t_ts, predict_ts)
     tab_perform = [['Accuracy', acc_tr, acc_ts],['Précision', prs_tr, prs_ts],\
                    ['Rappel', rec_tr, rec_ts],['F-Beta', fbeta_tr, fbeta_ts]]
-    print(tabulate(tab_perform, headers=['Metrique', 'Train', 'Test'], \
-                   floatfmt='.4f'))
-    
-    #roc_courbe = plot_roc_curve(classif, x_ts, t_ts)
+    print(tabulate(tab_perform, headers=['Metrique', 'Train', 'Test'], floatfmt='.4f'))
    
     return tab_perform
 
