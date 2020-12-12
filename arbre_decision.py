@@ -31,7 +31,7 @@ class ArbreDecision:
 
         Méthode de Grid Search: 
             prof_max: Profondeur maximale entre 10 et 50
-            msf: Nombre minimal de samples dans une feuille entre 2 et 10
+            msf: Nombre minimal de samples (données) dans une feuille entre 2 et 10
             Mesure de la qualité de la séparation: giny et entropy
         
         Retourne un dictionnaire avec les meilleurs hyperparamètres
