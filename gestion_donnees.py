@@ -6,11 +6,8 @@ Created on Wed Oct  7 13:26:37 2020
          sergio.redondo
 """
 
-import numpy as np   # Algébra linéal
-import pandas as pd  # Analyse de données
 from sklearn.preprocessing import LabelEncoder # Gérer les noms des cibles
 from sklearn.model_selection import train_test_split
-# rom sklearn.model_selection import KFold
 
 
 

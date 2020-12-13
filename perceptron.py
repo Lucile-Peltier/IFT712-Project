@@ -104,8 +104,7 @@ class Perceptron:
         
         print('Paramètres utilisés pour l\'entraînement perceptron :',\
               self.classif.get_params(),'\n')
-        #arbre_fin = self.classif.fit(x_train, t_train)
-        #tree.plot_tree(arbre_fin)
+            
         return self.classif.fit(x_train, t_train)
     
     def prediction(self, x_p):

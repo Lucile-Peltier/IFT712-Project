@@ -9,6 +9,8 @@ Created on Thu Dec 10 19:44:30 2020
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import RandomizedSearchCV, KFold
+import scikitplot as skplt
+
 
 class KProchesVoisins:
     def __init__(self):
@@ -25,6 +27,7 @@ class KProchesVoisins:
         self.metric_params=None   # paramères additionnels
         self.n_jobs=None          # travaux parallèles
         
+       
     def recherche_hyper(self, x_tr, t_tr):
         """
         Recherche d'hyperparamètres pour les K plus proches voisins'
@@ -79,8 +82,9 @@ class KProchesVoisins:
         else:
             print('Debut de l\'entrainement K voisins sans recherche d\'hyperparamètres','\n')
             parametres = {'n_neighbors': self.n_neighbors, 'weights': self.weights, \
-                          'algorithm': self.algorithm, 'leaf_size' : self.leaf_size, 'p': self.p,\
-                          'metric': self.metric, 'metric_params': self.metric_params, 'n_jobs': self.n_jobs}
+                          'algorithm': self.algorithm, 'leaf_size' : self.leaf_size,\
+                          'p': self.p, 'metric': self.metric, 'metric_params': self.metric_params,\
+                          'n_jobs': self.n_jobs}
             
         self.classif =KNeighborsClassifier(**parametres)
         
@@ -88,6 +92,7 @@ class KProchesVoisins:
               self.classif.get_params(),'\n')
             
         return self.classif.fit(x_train, t_train)
+        
     
     def prediction(self, x_p):
         """
@@ -99,3 +104,5 @@ class KProchesVoisins:
         """
         self.t_p = self.classif.predict(x_p)
         return self.t_p
+    
+    

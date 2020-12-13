@@ -8,7 +8,7 @@ Created on Wed Oct  7 13:30:09 2020
 
 import numpy as np
 from sklearn import tree
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, KFold
+from sklearn.model_selection import RandomizedSearchCV, KFold
 
 
 

@@ -1,0 +1,15 @@
+ipykernel
+ipython
+ipython-genutils
+jupyter
+jupyter-client
+jupyter-console
+jupyter-core
+matplotlib
+notebook
+numpy
+scikit-learn
+scipy
+pandas
+virtualenv
+tabulate
